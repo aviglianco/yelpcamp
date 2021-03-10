@@ -2,10 +2,13 @@ const express    = require("express"),
       ejs        = require("ejs"),
       bodyParser = require("body-parser"),
       mongoose   = require("mongoose"),
-      Campground = require("./models/campground");
+      Campground = require("./models/campground"),
+      seedDB     = require("./seeds");
 
 
 const app = express();
+
+seedDB();
 
 app.set('view engine', 'ejs');
 
