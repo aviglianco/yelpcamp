@@ -1,10 +1,15 @@
-const mongoose = require("mongoose");
+var mongoose = require("mongoose");
 
-// SCHEMA SETUP
-const campgroundSchema = mongoose.Schema({
-    name: String,
-    img: String,
-    description: String
+var campgroundSchema = new mongoose.Schema({
+   name: String,
+   image: String,
+   description: String,
+   comments: [
+      {
+         type: mongoose.Schema.Types.ObjectId,
+         ref: "Comment"
+      }
+   ]
 });
 
- module.exports = mongoose.model("Campground", campgroundSchema);
+module.exports = mongoose.model("Campground", campgroundSchema);

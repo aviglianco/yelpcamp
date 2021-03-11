@@ -17,6 +17,7 @@ app.use(express.static("public"));
 
 mongoose.connect("mongodb://localhost:27017/yelp_camp", {useNewUrlParser: true, useUnifiedTopology: true});
 
+// ROUTES
 app.get("/", function(req, res) {
     res.render("home");
 });
@@ -31,6 +32,7 @@ app.get("/campgrounds", function(req, res){
     });
 });
 
+// NEW campground
 app.post("/campgrounds", function(req, res) {
     var newCampName = req.body.newCampName;
     var newCampImg = req.body.newCampImg;
@@ -45,12 +47,14 @@ app.post("/campgrounds", function(req, res) {
     })
 });
 
+// NEW campground form
 app.get("/campgrounds/new", function(req, res) {
     res.render("new-camp");
 });
 
+// SHOW each campground
 app.get("/campgrounds/:id", function(req, res) {
-    Campground.findById(req.params.id, function(err, foundCampground) {
+    Campground.findById(req.params.id).populate("comments").exec(function(err, foundCampground) {
         if (err) {
             console.log(err);
         } else {
@@ -58,6 +62,9 @@ app.get("/campgrounds/:id", function(req, res) {
         }
     });
 });
+
+// COMMENT ROUTES
+
 
 app.listen(3000, function() {
     console.log("Server running on port 3000.");
